@@ -6,10 +6,10 @@
 //
 package Week05;
 
-
-
-
-
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 public class Week05OOPLab {
 
@@ -49,7 +49,8 @@ public class Week05OOPLab {
 		//
 		System.out.println("\nQuestion 1: Card Class");
 		// Add your code here to instantiate a Card
-		
+		Card card = new Card("Two", "Hearts", 2);
+		card.describe();
 		
 		// Call the describe method on the newly instantiated card.
 		
@@ -72,10 +73,10 @@ public class Week05OOPLab {
 		//
 		System.out.println("\nQuestion 2: Deck Class");
 	    // Add your code here to instantiate a Deck	
-	    
+	    Deck deck = new Deck();
 	    
 	    // Call the describe method on the newly instantiated deck.
-	    
+	    deck.describe();
 	    
 	    
 	    
@@ -85,11 +86,12 @@ public class Week05OOPLab {
 		//		Add a shuffle method within the Deck Class
 		System.out.println("\nQuestion 3: Deck shuffle() method");
 		// Test your method here
+		deck.shuffle();
 		
 		
 		
 		// Call the describe method on the newly shuffled deck.
-
+        deck.describe();
 		
 		
 		
@@ -97,7 +99,8 @@ public class Week05OOPLab {
 		//		Add a draw method within the Deck Class
 		System.out.println("\nQuestion 4: Deck draw() method");
 		// Test your method here
-		
+		Card drawnCard = deck.draw();
+		drawnCard.describe();
 		
 		
 		
@@ -115,18 +118,49 @@ public class Week05OOPLab {
 		// 			and deal the cards out to the "players" in the Map.
 		System.out.println("\nQuestion 5: Create Game");
 		// Call your method here
-
-		
-		
-		
-		
-		
+		Map<String, List<Card>> gameBoard = new HashMap<>();
+		int numberOfPlayers = 4; 
+		gameBoard = creatGame(numberOfPlayers);
+		System.out.println("-----------------------------------");
+		for(int i = 1; i <= numberOfPlayers; i++) {
+			String playerName = "Player " + i;
+			System.out.println(playerName + "\n----------");
+			List<Card> playerList = gameBoard.get(playerName);
+			for(Card handCard : playerList) {
+				handCard.describe();
+			}
+		}
 		
 		
 	} 
 	
 	// Method 5:
-	
+	public static Map<String, List<Card>> creatGame (int numOfPlayers) {
+		Map<String, List<Card>> finalGameBoard = new HashMap<>();
+	    Deck deck = new Deck();
+	    deck.shuffle();
+	    System.out.println("Deck has " + deck.getCards().size() + "cards!");
+		
+	    for(int i = 1; i <= numOfPlayers; i++); {
+	    	List<Card> playerList = new ArrayList<>();
+			String playerName = "Player";
+		    finalGameBoard.put(playerName, playerList);
+			
+	    }
+	    
+	    for (int i1 = 0; i1 < 52/numOfPlayers; i1++) {
+	    	for( int j = 1; j <= numOfPlayers; j++) {
+	    		String playerName = "Player " + j; 
+	    		List<Card> playerList = finalGameBoard.get(playerName);
+	    		playerList.add(deck.draw());
+	    		finalGameBoard.replace(playerName, playerList);
+	    		
+	    	}
+	    }
+		
+		return finalGameBoard;
+		
+	}
 	
 	
 	
